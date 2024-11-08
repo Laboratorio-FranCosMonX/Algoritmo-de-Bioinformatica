@@ -51,24 +51,6 @@ public class Algoritm {
 		JOptionPane.showMessageDialog(null, "Dados gravados no arquivo saida.txt.");
 	}
 	
-	private void formarRespostaArquivo() {
-		int qtdChars = X.size() * 10;
-		String linha_De_iguais = "", linha_De_ifen = "";
-		for(int i = 0 ; i < qtdChars ; i++) linha_De_iguais += "=";
-		for(int i = 0 ; i < qtdChars ; i++) linha_De_ifen += "-";
-	
-		dadosArquivo += linha_De_ifen + "\n";
-		dadosArquivo += "** matrix **\n";
-		dadosArquivo += linha_De_iguais + "\n";
-		dadosArquivo += viewMatriz() + "\n";
-		dadosArquivo += linha_De_iguais + "\n";
-		dadosArquivo += "Score = "+ SCORE + "\n";
-		dadosArquivo += "** Match = " + MATCH + " | mismatch = " + MISSMATCH + " | gap = " + GAP + " **\n";
-		dadosArquivo += linha_De_ifen + "\n" + "Alinhamento \n";
-		dadosArquivo += "V = " + alinhamento[0] + "\n" + "H = " + alinhamento[1] + "\n";
-		System.out.println(dadosArquivo);
-	}
-	
 	public Algoritm(String sequenciaY, String sequenciaX, Integer gap, Integer missmatch, Integer match) {
 		GAP = gap;
 		MISSMATCH = missmatch;
@@ -114,68 +96,6 @@ public class Algoritm {
 		}
 	}
 	
-	public String viewMatriz() {
-		String str = "";
-		int lenY = Y.size();
-		int lenX = X.size();
-		
-		for(int i = lenY - 1 ; i>=0 ; i--) {
-			str += Y.get(i) + "\t";
-			for(int j = 0 ; j< lenX  ; j++) {
-				str += tab[i][j] == null ? "null " : tab[i][j].valor + " ";
-			}
-			str += "\n";
-		}
-
-		str += "\n\t";
-		for(int j = 0 ; j< lenX  ; j++) {
-			str += X.get(j) + " ";
-		}
-		return str;
-	}
-	
-	/**
-	 * Impressão da tabela de valores
-	 */
-	@Override
-	public String toString() {
-		String str = "";
-		int lenY = Y.size();
-		int lenX = X.size();
-		
-		for(int i = lenY - 1 ; i>=0 ; i--) {
-			str += Y.get(i) + "\t";
-			for(int j = 0 ; j< lenX  ; j++) {
-				str += tab[i][j] == null ? "null " : tab[i][j].valor + " ";
-			}
-			str += "\n";
-		}
-
-		str += "\n\t";
-		for(int j = 0 ; j< lenX  ; j++) {
-			str += X.get(j) + " ";
-		}
-		
-		str += "\n\n RESPOSTA\nVertical: ";
-		while(true) {
-			try {
-				str += YY.pop();
-			}catch(Exception e) {
-				break;
-			}
-		}
-		str += "\nHorizontal: ";
-		while(true) {
-			try {
-				str += XX.pop();
-			}catch(Exception e) {
-				break;
-			}
-		}
-		
-		return str;
-	}
-	
 	/**
 	 * Calcular os valores reais de cada localização na tabela
 	 * @param x
@@ -201,17 +121,29 @@ public class Algoritm {
 			Integer [] paiX = {x-1,y};
 			
 			if(!val.pais.contains(paiX))val.pais.add(paiX);
-		}else if(numeroY == maiorValor) {
+		}
+		if(numeroY == maiorValor) {
 			Integer [] paiY = {x,y-1};
 			
 			if(!val.pais.contains(paiY))val.pais.add(paiY);
 		}
-		else if( numeroXY == maiorValor) {
+		 if( numeroXY == maiorValor) {
 			Integer [] paiXY = {x-1,y-1};
 			
 			if(!val.pais.contains(paiXY))val.pais.add(paiXY);
 		}
 		return val;
+	}
+	
+	/**
+	 * Passa por toda a matriz a partir do indice [1,1]
+	 */
+	private void algoritm() {
+		for(int i = 1 ; i < Y.size() ; i++) {
+			for(int j = 1 ; j < X.size() ; j++) {
+				tab[i][j] = compare(j, i);
+			}
+		}
 	}
 	
 	/**
@@ -293,14 +225,10 @@ public class Algoritm {
 		
 	}
 	
-	private void algoritm() {
-		for(int i = 1 ; i < Y.size() ; i++) {
-			for(int j = 1 ; j < X.size() ; j++) {
-				tab[i][j] = compare(j, i);
-			}
-		}
-	}
-	
+	/**
+	 * Obter uma matriz contendo a tabela gerada em posição de 1ºo quadrante, levando em consideração um plano cartesiano.
+	 * @return
+	 */
 	public Object [][] getTab (){
 		Object [][] aux = new Object [tab.length + 1][tab[0].length + 1];
 		int sizeY = aux.length;
@@ -361,4 +289,92 @@ public class Algoritm {
 	public String[] getAlinhamento() {
 		return alinhamento;
 	}
+	
+	/*
+	 * Obter o valor final do resultado do alinhamento
+	 */
+	public Integer getScore() {
+		return SCORE;
+	}
+
+	public String viewMatriz() {
+		String str = "";
+		int lenY = Y.size();
+		int lenX = X.size();
+		
+		for(int i = lenY - 1 ; i>=0 ; i--) {
+			str += Y.get(i) + "\t";
+			for(int j = 0 ; j< lenX  ; j++) {
+				str += tab[i][j] == null ? "null " : tab[i][j].valor + " ";
+			}
+			str += "\n";
+		}
+
+		str += "\n\t";
+		for(int j = 0 ; j< lenX  ; j++) {
+			str += X.get(j) + " ";
+		}
+		return str;
+	}
+	
+	private void formarRespostaArquivo() {
+		int qtdChars = X.size() * 10;
+		String linha_De_iguais = "", linha_De_ifen = "";
+		for(int i = 0 ; i < qtdChars ; i++) linha_De_iguais += "=";
+		for(int i = 0 ; i < qtdChars ; i++) linha_De_ifen += "-";
+	
+		dadosArquivo += linha_De_ifen + "\n";
+		dadosArquivo += "** matrix **\n";
+		dadosArquivo += linha_De_iguais + "\n";
+		dadosArquivo += viewMatriz() + "\n";
+		dadosArquivo += linha_De_iguais + "\n";
+		dadosArquivo += "Score = "+ SCORE + "\n";
+		dadosArquivo += "** Match = " + MATCH + " | mismatch = " + MISSMATCH + " | gap = " + GAP + " **\n";
+		dadosArquivo += linha_De_ifen + "\n" + "Alinhamento \n";
+		dadosArquivo += "V = " + alinhamento[0] + "\n" + "H = " + alinhamento[1] + "\n";
+		System.out.println(dadosArquivo);
+	}
+	
+	/**
+	 * Impressão da tabela de valores. Recomenda-se usar apenas para debug
+	 */
+	@Override
+	public String toString() {
+		String str = "";
+		int lenY = Y.size();
+		int lenX = X.size();
+		
+		for(int i = lenY - 1 ; i>=0 ; i--) {
+			str += Y.get(i) + "\t";
+			for(int j = 0 ; j< lenX  ; j++) {
+				str += tab[i][j] == null ? "null " : tab[i][j].valor + " ";
+			}
+			str += "\n";
+		}
+
+		str += "\n\t";
+		for(int j = 0 ; j< lenX  ; j++) {
+			str += X.get(j) + " ";
+		}
+		
+		str += "\n\n RESPOSTA\nVertical: ";
+		while(true) {
+			try {
+				str += YY.pop();
+			}catch(Exception e) {
+				break;
+			}
+		}
+		str += "\nHorizontal: ";
+		while(true) {
+			try {
+				str += XX.pop();
+			}catch(Exception e) {
+				break;
+			}
+		}
+		
+		return str;
+	}
+	
 }

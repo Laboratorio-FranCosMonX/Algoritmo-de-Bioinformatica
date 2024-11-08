@@ -37,4 +37,64 @@ Ao encontrar o maior valor, o algoritmo pega a primeira coordenada armazenada no
 
 > Nesta segunda etapa, como está sendo retornado em um caminho previamente criado, a escrita será armazenada de trás para a frente.
 
+## Aplicação
+
+O usuário pode optar por inserir os dados (preencher os campos) contidos na interface, sendo obrigado o preenchimento de todos os campos, para que seja gerado uma tabela e mostrado o resultado do alinhamento (mas não mostra o Score nesta versão) e pode optar por inserir os dados em um arquivo de texto nomeado de `"input.txt"` respeitando a seguinte sintase:
+* **1ª Linha:** Vertical;
+* **2ª Linha:** Horizontal;
+* **3ª Linha:** valor do GAP;
+* **4ª Linha:** valor do MISMATCH;
+* **5ª Linha:** valor do MATCH;
+
+Em ambos os casos, deverá mostrar uma mensagem do sistema informando se teve êxito ou erro na execução da aplicação.
+
+### Usando a Aplicação
+
+A duas formas de adicionar dados e ver o resultado. A primeira envolve arquivos de entrada e outra de saída e a segunda senvolve os campos da interface que irá gerar uma tabela ao apertar no botão "avançar".
+
+### Instalação
+
+A aplicação foi desenvolvida utilizando o JDK 22 (versão 22), então é necessário que o usuário tenha o JDK na versão 22 instalado em sua máquina. Após isto, é necessário instalar a aplicação que está localizado na raiz deste repositório, chamado de "Smith Waterman - bioinformatica.jar".
+
+#### Utilizando arquivos
+
+Executar a aplicação "Smith Waterman - bioinformatica.jar" lhe mostrará uma interface igual a esta visivel logo a seguir.
+
+<div align="center">
+  <img src="./imagens/Captura de tela 2024-11-07 142746.png" alt="imagem contendo os campos de entrada a serem preenchidas pelo o usuário para que o algoritmo possa a ser executado. Contendo dois botões."> </img>
+  <p>Interface Visual para preenchimento de dados.</p>
+</div>
+
+Para a execução da aplicação é necessário que seja criado, no mesmo diretório que se encontra a aplicação, um arquivo chamado "input.txt" que deve ser preenchido com os dados necessário para a execução do algoritmo. Com isto, basta pressionar o botão "usar arquivo" e logo a seguir será informado se a execução foi bem sucedida ou não.
+
+O resultado deverá ser gravado em um arquivo "saida.txt" que poderá ser encontrado no mesmo diretório onde se encontra a aplicação. O resultado deve ser semelhante ao da imagem a seguir.
+
+<div align="center">
+  <img src="./imagens/Captura de tela 2024-11-08 110537.png" alt="resultado para uma execução envolvendo as entradas contidas no arquivo input.txt."> </img>
+  <p>Resultado do alinhamento de CGACGCC (vertical) e AACGCA (horizontal) usando -4, -2 e 6 como GAP, MISMATCH e MATCH.</p>
+</div>
+
+#### Utilizando a interface
+
+Executar a aplicação "Smith Waterman - bioinformatica.jar" lhe mostrará uma interface igual a esta visivel logo a seguir.
+
+<div align="center">
+  <img src="./imagens/Captura de tela 2024-11-07 142746.png" alt="imagem contendo os campos de entrada a serem preenchidas pelo o usuário para que o algoritmo possa a ser executado. Contendo dois botões."> </img>
+  <p>Interface Visual para preenchimento de dados.</p>
+</div>
+
+A seguir, basta preencher todos os campos corretamente (não foi implementado validação de entradas). A interface apresenta dois campos que recebem string chamados de vertical e horizontal e três campos de inteiros chamados de GAP, MISSMATCH E MATCH.
+
+Ao preencher os campos, basta pressionar o botão "avançar". Com isso, irá apresentar uma nova interface mostrando a tabela (ordenada como se estivesse no 4º quadrante de um plano cartesiano) e o resultado do alinhamento (não informa o Score).
+
+<div align="center">
+  <img src="./imagens/Captura de tela 2024-11-08 112254.png" alt="Imagem da interface de preenchimento de dados contendo as entradas CGACGCC (vertical), AACGCA (horizontal), -4 (gap), -2 (mismatch) e 6 (match)."> </img>
+  <p>Imagem da interface de preenchimento de dados contendo as entradas CGACGCC (vertical), AACGCA (horizontal), -4 (gap), -2 (mismatch) e 6 (match).</p>
+</div>
+
+<div align="center">
+  <img src="./imagens/Captura de tela 2024-11-08 103050.png" alt="Resultado do processamento dos dados inseridos nos campos da imagem anterior."> </img>
+  <p>Resultado do processamento do algoritmo de acordo com os dados inseridos pelo usuário.</p>
+</div>
+
 </div>

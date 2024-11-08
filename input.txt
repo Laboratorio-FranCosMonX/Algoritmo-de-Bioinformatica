@@ -1,5 +1,5 @@
-CGCCA
-CAGC
+CGACGCC
+AACGCA
 -4
 -2
-8
+6
