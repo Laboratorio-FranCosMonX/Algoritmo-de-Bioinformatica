@@ -38,9 +38,31 @@ public class Arquivo {
 		}
 	}
 	
+	static public String apenasLer(String nome_arquivo) throws IOException {
+		String str = "";
+		try (BufferedReader leitor = new BufferedReader(new FileReader(nome_arquivo))) { 
+			String linha;
+			while ((linha = leitor.readLine()) != null) { 
+				str += linha;
+			}
+			System.out.println(str);
+			return str;
+		} catch (IOException e) {
+			throw new IOException("Ocorreu um erro ao ler o arquivo: " + e.getMessage());
+		}	
+	}
+	
 	public void escrever(String txt) throws IOException {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter("saida.txt"));){
 			bw.write(txt);
+		} catch (Exception e) {
+			throw new IOException("Ocorreu um erro ao escrever no arquivo saida.txt");
+		}
+	}
+	
+	static public void escreverEmArquivoEspecifico(String nomeDoArquivo, String conteudo) throws IOException {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(nomeDoArquivo));){
+			bw.write(conteudo);
 		} catch (Exception e) {
 			throw new IOException("Ocorreu um erro ao escrever no arquivo saida.txt");
 		}
