@@ -45,7 +45,6 @@ public class Arquivo {
 			while ((linha = leitor.readLine()) != null) { 
 				str += linha;
 			}
-			System.out.println(str);
 			return str;
 		} catch (IOException e) {
 			throw new IOException("Ocorreu um erro ao ler o arquivo: " + e.getMessage());

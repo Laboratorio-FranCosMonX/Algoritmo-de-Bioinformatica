@@ -1,16 +1,20 @@
-# Algoritmo Smith Waterman (alinhamento global)
+# Algoritmos de Bioinformatica
 
 <div align="justify">
 
+Algoritmos implementados durante a disciplian de Bioinformatica na Universidade Federal do Piauí com o objetivo de aprender, na prática, a implementar soluções na área.
+
+## Algoritmo Smith Waterman (alinhamento global)
+
 Algoritmo de alinhamento (global) de sequências de proteinas para a disciplina de bioinformatica da Universidade Federal do Piaui.
 
-## Implementação
+### Implementação
 
 O algoritmo tem duas estapas:
 1 - Montar a tabela com os calculos considerando MISS MATCH (-1), GAP (-2) e MATCH (+1).
 2 - Backtrace: encontrar o maior valor localizado na ultima linha ou coluna e começar voltar o caminho criado na primeira etapa.
 
-### Matriz
+#### Matriz
 
 O tamanho da matriz depende das entradas e cada indice da matriz contem um objeto Valor que, por sua vez, contém o valor (inteiro) e uma listas responsável por armazenar as coordenadas (x,y) dos inidices filhos criando, assim, um caminho a ser usado na etapa 2.
 
@@ -19,7 +23,7 @@ O tamanho da matriz depende das entradas e cada indice da matriz contem um objet
   <p>Resultado da primeira etapa para a entrada CTTTG (vertical) e GCTT (horizontal). Matriz 6x5.</p>
 </div>
 
-### Backtrace
+#### Backtrace
 
 Após a criação da matriz e armazenamento dos dados, é dado inicio a segunda e última etapa, o backtrace. Nada mais é que encontrar o maior valor entre os indices localizados na ultima coluna e os indices da ultima linha e seguir o caminho "de volta" para a origem (x = 0, y = 0). Após isto é pegue a primeira coordenada armazenada na lista de possiveis caminhos e é analisado qual (quais) ácido(s) nucleico(s) deixará(am) de ser visivel(is) (irá para outra linha e/ou coluna). Caso o ácido nucleico deixe de ser visível, ele deverá ser guardado, caso contrário, um gap deve ser colocado no local.
 <div align="center">
@@ -37,7 +41,7 @@ Ao encontrar o maior valor, o algoritmo pega a primeira coordenada armazenada no
 
 > Nesta segunda etapa, como está sendo retornado em um caminho previamente criado, a escrita será armazenada de trás para a frente.
 
-## Aplicação
+### Aplicação
 
 O usuário pode optar por inserir os dados (preencher os campos) contidos na interface, sendo obrigado o preenchimento de todos os campos, para que seja gerado uma tabela e mostrado o resultado do alinhamento (mas não mostra o Score nesta versão) e pode optar por inserir os dados em um arquivo de texto nomeado de `"input.txt"` respeitando a seguinte sintase:
 * **1ª Linha:** Vertical;
@@ -48,15 +52,15 @@ O usuário pode optar por inserir os dados (preencher os campos) contidos na int
 
 Em ambos os casos, deverá mostrar uma mensagem do sistema informando se teve êxito ou erro na execução da aplicação.
 
-### Usando a Aplicação
+#### Usando a Aplicação
 
 A duas formas de adicionar dados e ver o resultado. A primeira envolve arquivos de entrada e outra de saída e a segunda senvolve os campos da interface que irá gerar uma tabela ao apertar no botão "avançar".
 
-### Instalação
+#### Requisitos
 
 A aplicação foi desenvolvida utilizando o JDK 22 (versão 22), então é necessário que o usuário tenha o JDK na versão 22 instalado em sua máquina. Após isto, é necessário instalar a aplicação que está localizado na raiz deste repositório, chamado de "Smith Waterman - bioinformatica.jar".
 
-#### Utilizando arquivos
+##### Utilizando arquivos
 
 Executar a aplicação "Smith Waterman - bioinformatica.jar" lhe mostrará uma interface igual a esta visivel logo a seguir.
 
@@ -74,7 +78,7 @@ O resultado deverá ser gravado em um arquivo "saida.txt" que poderá ser encont
   <p>Resultado do alinhamento de CGACGCC (vertical) e AACGCA (horizontal) usando -4, -2 e 6 como GAP, MISMATCH e MATCH.</p>
 </div>
 
-#### Utilizando a interface
+##### Utilizando a interface
 
 Executar a aplicação "Smith Waterman - bioinformatica.jar" lhe mostrará uma interface igual a esta visivel logo a seguir.
 
@@ -96,5 +100,50 @@ Ao preencher os campos, basta pressionar o botão "avançar". Com isso, irá apr
   <img src="./imagens/Captura de tela 2024-11-08 103050.png" alt="Resultado do processamento dos dados inseridos nos campos da imagem anterior."> </img>
   <p>Resultado do processamento do algoritmo de acordo com os dados inseridos pelo usuário.</p>
 </div>
+
+## Algoritmo de remontagem de uma sequência genética.
+
+O algoritmo de remontagem de uma sequência genética é responsável por montar uma sequência de DNA considerando vários pedaços iguais (k-mers). Por padrão, a aplicação irá verificar se k-1 ácidos nucleicos de um kmer se sobrepôe a outro.
+
+### Implementação
+
+A aplicação é construída com base em uma matriz quadrada em que o tamanho é igual a quantidade de kmers a serem sobrepostos para formar a solução. Para isto, é respeitado o seguinte processo:
+
+1. Criação da matriz N x N;
+2. Preenchimento inicial da Maatriz;
+3. Alimentação da Matriz com os dados dos kmers;
+4. Mapeamento e construção do resultado.
+
+Cada indice dessa matriz armazena um lado da seta: *esquerda* sendo o inicio da seta e *direita* sendo o fim da seta (a ponta).
+
+> É importante destacar que os kmers devem estar organizados em ordem lexicográfica.
+
+### Aplicação
+
+A aplicação só executará problemas menos complexos, ou seja, menos kmers para serem remontados. Para problemas mais complexos é necessário que seja disponibilizado mais memória para a execução desta.
+
+A aplicação "Assembler" lê um arquivo contendo n kmers separados por ',' e contidar em um arquivo de texto. O arquivo deve estar no mesmo repositório que o arquivo de execução da aplicação - "Assembler.jar". Ela, também, irá salvar o resultado gerado em um arquivo de saída na qual o usuário informará o nome do arquivo em conjunto com sua extensão, exemplo: "ResultadoA.txt".
+
+#### Requisitos
+
+A aplicação foi desenvolvida utilizando o JDK 22 (versão 22), então é necessário que o usuário tenha o JDK na versão 22 instalado em sua máquina. Após isto, é necessário instalar a aplicação que está localizado na raiz deste repositório, chamado de "Assembler.jar".
+
+Recomenda-se que o usuário esteja executando (execução normal) em um computador com no mínimo 4GB de RAM e em casos de testes mais complexos, 8Gb ou 12Gb de RAM.
+
+#### Utilizando o arquivo
+
+A aplicação pode ser usada ao executar o arquivo "Assembler.jar" via linha de comando (Terminal) com o seguinte código:
+
+```console
+java -jar Assembler.jar
+```
+
+Para a montagem de uma sequência genética mais complexa, é necessário que seja disponibilizado mais memória para a aplicação. Um exemplo de código de execução da aplicação via TERMINAL pode ser visto logo a seguir (disponibilizando até 4gb para a aplicação):
+
+```console
+java -Xmx4g -jar Assembler.jar
+```
+
+Durante a execução será mostrado a etapa atual em que a aplicação está executando.
 
 </div>
